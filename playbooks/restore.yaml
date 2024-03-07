@@ -1,6 +1,12 @@
 - name: Restore configuration to current host
   hosts: localhost
   tasks:
+    - name: Restore SSH key
+      ansible.builtin.copy:
+        src: ../config/id_rsa
+        dest: ~/.ssh/
+        mode: 0600
+        decrypt: true
     - name: Restore NeoVim configuration
       ansible.builtin.copy:
         src: ../config/nvim
