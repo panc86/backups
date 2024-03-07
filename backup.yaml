@@ -1,0 +1,7 @@
+- name: Backup configuration from current host
+  hosts: localhost
+  tasks:
+    - name: Backup NeoVim configuration
+      ansible.builtin.copy:
+        src: ~/.config/nvim
+        dest: ./config
