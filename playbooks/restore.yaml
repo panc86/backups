@@ -1,10 +1,6 @@
 - name: Restore configuration to current host
   hosts: localhost
   tasks:
-    - name: Restore encrypted test file
-      ansible.builtin.copy:
-        src: ./config/test.txt
-        dest: ~/Downloads/
     - name: Restore NeoVim configuration
       ansible.builtin.copy:
         src: ./config/nvim
