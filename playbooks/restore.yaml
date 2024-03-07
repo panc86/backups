@@ -3,5 +3,5 @@
   tasks:
     - name: Restore NeoVim configuration
       ansible.builtin.copy:
-        src: ./config/nvim
+        src: ../config/nvim
         dest: ~/.config
