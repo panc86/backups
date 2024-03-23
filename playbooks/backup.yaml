@@ -1,7 +1,6 @@
 - name: Backup configuration from current host
   hosts: localhost
   tasks:
-    - name: Backup NeoVim configuration
-      ansible.builtin.copy:
-        src: ~/.config/nvim
-        dest: ../config
+    - name: Rsync NeoVim configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete ~/.config/nvim ../config 
