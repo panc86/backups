@@ -1,0 +1,17 @@
+- name: Install Poetry
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install dependencies via apt
+      ansible.builtin.apt:
+        name:
+          - curl
+
+    - name: Install Poetry in /opt/poetry
+      ansible.builtin.shell:
+        cmd: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry POETRY_VIRTUALENVS_IN_PROJECT=true python3 - 
