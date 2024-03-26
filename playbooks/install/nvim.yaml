@@ -1,5 +1,8 @@
+---
 - name: Install NeoVim to current host
   hosts: localhost
+  become: true
+
   tasks:
     - name: Install neovim v0.9.5 using AppImage and checksum
       ansible.builtin.get_url:
@@ -8,7 +11,7 @@
         mode: 0755
         force: true
         checksum: sha256:0c82e5702af7a11fbb916a11b4a82e98928abf8266c74b2030ea740340437bf9
-      become: true
+
     - name: Install neovim libfuse2 dependency with apt
       ansible.builtin.apt:
         name: libfuse2
