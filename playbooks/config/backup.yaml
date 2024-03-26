@@ -1,0 +1,23 @@
+---
+- name: Backup configuration from current host
+  hosts: localhost
+
+  vars_prompt:
+    name: vault_secret
+    prompt: encryption password
+    confirm: true
+    private: true
+
+  vars:
+    keepassxc_vault_file: "{{ lookup('env', 'HOME') }}/passdb.kdbx"
+
+  tasks:
+    - name: In-place (re)encrypt KeepPassXC password database {{ keepassxc_vault_file }}
+      ansible.builtin.copy:
+        content: "{{ lookup('ansible.builtin.file', keepassxc_vault_file) | ansible.builtin.vault(vault_secret) }}"
+        dest: ../../config/passdb.kdbx
+        decrypt: false
+
+    - name: Rsync NeoVim configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete ~/.config/nvim ../../config 
