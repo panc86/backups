@@ -10,7 +10,6 @@ end
 return {
     {
         "folke/tokyonight.nvim",
-        as = "tokyonighty",
         config = function()
             require("tokyonight").setup({
                 -- your configuration comes here
@@ -32,7 +31,6 @@ return {
     },
     {
         "catppuccin/nvim",
-        as = "catppuccin",
         config = function()
             require("catppuccin").setup({
                 flavour = "mocha", -- latte, frappe, macchiato, mocha
