@@ -1,0 +1,53 @@
+---
+- name: Download, build and install KeepassXC
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Download KeepassXC source code in /tmp
+      ansible.builtin.get_url:
+        url: "https://github.com/keepassxreboot/keepassxc/releases/download/2.7.7/keepassxc-2.7.7-src.tar.xz"
+        dest: "/tmp/keepassxc-2.7.7-src.tar.xz"
+        force: true
+        checksum: "sha256:https://github.com/keepassxreboot/keepassxc/releases/download/2.7.7/keepassxc-2.7.7-src.tar.xz.DIGEST"
+
+    - name: Unarchive KeepassXC source code into /opt/keepassxc
+      ansible.builtin.shell:
+        cmd: tar -xf /tmp/keepassxc-2.7.7-src.tar.xz -C /opt
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install dependencies via apt
+      ansible.builtin.apt:
+        name:
+          - build-essential 
+          - cmake 
+          - g++ 
+          - asciidoctor
+          - qtbase5-dev 
+          - qtbase5-private-dev 
+          - qttools5-dev
+          - qttools5-dev-tools
+          - libqt5svg5-dev
+          - libargon2-dev
+          - libminizip-dev
+          - libbotan-2-dev
+          - libqrencode-dev
+          - libkeyutils-dev
+          - zlib1g-dev
+          - libreadline-dev
+          - libpcsclite-dev
+          - libusb-1.0-0-dev
+          - libxi-dev
+          - libxtst-dev
+          - libqt5x11extras5-dev
+
+    - name: Build KeepassXC repo from source code
+      ansible.builtin.shell:
+        cmd: cd /opt/keepassxc-2.7.7 && mkdir build && cd build && cmake -DWITH_XC_ALL=ON .. && make
+
+    - name: Install KeepassXC repo from source code
+      ansible.builtin.shell:
+        cmd: cd /opt/keepassxc-2.7.7/build && make install
