@@ -6,7 +6,7 @@ authors = ["Emanuele Panizio <panc86@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-ansible = "^9.3.0"
+ansible-core = "2.12.3"
 python = "^3.10"
 
 [build-system]
