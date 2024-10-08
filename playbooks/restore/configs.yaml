@@ -1,0 +1,11 @@
+---
+- name: Restore configuration
+  hosts: localhost
+
+  tasks:
+    - name: Restore NeoVim configuration
+      ansible.builtin.copy:
+        src: ../../config/nvim
+        dest: ~/.config
+      tags:
+        - nvim

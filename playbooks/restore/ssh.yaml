@@ -1,0 +1,12 @@
+---
+- name: Restore configuration
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Restore decrypted SSH private key
+      ansible.builtin.copy:
+        src: ../../config/id_rsa
+        dest: ~/.ssh/
+        mode: 0600
+        decrypt: true

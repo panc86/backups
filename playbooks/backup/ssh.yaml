@@ -1,0 +1,19 @@
+---
+- name: Backup encrypted SSH private key
+  hosts: localhost
+
+  vars_prompt:
+    name: vault_secret
+    prompt: encryption password
+    confirm: true
+    private: true
+
+  vars:
+    ssh_vault_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+
+  tasks:
+    - name: Copy encrypted SSH private key {{ ssh_vault_file }}
+      ansible.builtin.copy:
+        content: "{{ lookup('ansible.builtin.file', ssh_vault_file) | ansible.builtin.vault(vault_secret) }}"
+        dest: ../../config/id_rsa
+        decrypt: false
