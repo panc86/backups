@@ -27,7 +27,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "ruff_lsp",
+                "ruff",
                 "pyright",
             },
             handlers = {
@@ -37,14 +37,14 @@ return {
                     }
                 end,
 
-                ["ruff_lsp"] = function ()
+                ["ruff"] = function ()
                     local lspconfig = require("lspconfig")
-                    lspconfig.pyright.setup {}
+                    lspconfig.ruff.setup {}
                 end,
 
                 ["pyright"] = function ()
                     local lspconfig = require("lspconfig")
-                    lspconfig.ruff_lsp.setup {}
+                    lspconfig.pyright.setup {}
                 end,
 
                 ["lua_ls"] = function()

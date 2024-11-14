@@ -5,7 +5,15 @@ return {
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all"
             ensure_installed = {
-                "vimdoc", "lua", "python", "bash",
+                "bash",
+                "dockerfile",
+                "json",
+                "lua",
+                "markdown",
+                "python",
+                "regex",
+                "vim",
+                "yaml",
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -29,6 +37,5 @@ return {
                 additional_vim_regex_highlighting = false,
             },
         })
-
     end
 }
