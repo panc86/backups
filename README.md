@@ -4,17 +4,14 @@ Automate Linux machine set up using Ansible playbooks
 
 ## Requirements
 
-> Requires Poetry
-
 ```shell
-# install requirements
-poetry install
+sudo apt install ansible-core
 ```
 
 ## Backup
 
 ```shell
-poetry run ansible-playbook ./playbooks/backup/<component>.yaml
+ansible-playbook ./playbooks/backup/<component>.yaml
 ```
 
 > IMPORTANT
@@ -24,11 +21,11 @@ poetry run ansible-playbook ./playbooks/backup/<component>.yaml
 ## Restore
 
 ```shell
-poetry run ansible-playbook ./playbooks/restore/<component>.yaml
+ansible-playbook ./playbooks/restore/<component>.yaml
 ```
 
 ## Install
 
 ```shell
-poetry run ansible-playbook ./playbooks/install/<component>.yaml
+ansible-playbook ./playbooks/install/<component>.yaml
 ```
