@@ -4,15 +4,24 @@
   become: true
 
   tasks:
-    - name: Install neovim v0.9.5 using AppImage and checksum
-      ansible.builtin.get_url:
-        url: "https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage"
-        dest: /usr/local/bin/nvim.appimage
-        mode: 0755
-        force: true
-        checksum: sha256:0c82e5702af7a11fbb916a11b4a82e98928abf8266c74b2030ea740340437bf9
+    - name: Creates NeoVim directory
+      ansible.builtin.file:
+        path: /opt/nvim
+        state: directory
 
-    - name: Install neovim libfuse2 dependency with apt
-      ansible.builtin.apt:
-        name: libfuse2
-        install_recommends: no
+    - name: Install NeoVim v0.10.3 using AppImage and checksum
+      ansible.builtin.get_url:
+        url: "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage"
+        dest: /opt/nvim/nvim.appimage
+        mode: 0744
+        force: true
+        checksum: sha256:ce5f6462d4fa7150cc90c593955f66f7707ab5edc1d18f87413ea482e096c24e
+
+    - name: Extract NeoVim Binary
+      # If your system does not have FUSE you can extract the appimage
+      ansible.builtin.shell:
+        cmd: cd /opt/nvim && ./nvim.appimage --appimage-extract
+
+    - name: Create NeoVim Symlink
+      ansible.builtin.shell:
+        cmd: ln -sf /opt/nvim/squashfs-root/usr/bin/nvim /usr/bin/nvim
