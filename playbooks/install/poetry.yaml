@@ -19,7 +19,7 @@
 
     - name: Create symlink in /usr/local/bin/poetry
       ansible.builtin.shell:
-        cmd: ln --symlink /opt/poetry/bin/poetry /usr/local/bin/poetry
+        cmd: ln --symbolic --force /opt/poetry/bin/poetry /usr/local/bin/poetry
 
     - name: Enable in-project virtualenvs creation
       ansible.builtin.shell:
