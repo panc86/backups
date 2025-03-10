@@ -4,6 +4,10 @@ vim.g.mapleader = " "
 -- consisten cursor style N/I modes
 vim.opt.guicursor = ""
 
+-- force splits below and right
+vim.o.splitbelow = true
+vim.o.splitright = true
+
 -- line numbers
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -12,9 +16,13 @@ vim.opt.relativenumber = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
+vim.o.showtabline = 2
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.smarttab = true
 
 -- history backup
 vim.opt.swapfile = false
