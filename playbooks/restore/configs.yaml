@@ -9,3 +9,17 @@
         dest: ~/.config
       tags:
         - nvim
+
+    - name: Restore Tmux configuration
+      ansible.builtin.copy:
+        src: ../../config/tmux
+        dest: ~/.config
+      tags:
+        - tmux
+
+    - name: Ensure Tmux Plugin Manager is cloned if not there
+      ansible.builtin.git:
+        repo: 'https://github.com/tmux-plugins/tpm.git'
+        dest: ~/.config/tmux/plugins/tpm
+      tags:
+        - tmux

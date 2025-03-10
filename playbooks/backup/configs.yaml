@@ -6,3 +6,7 @@
     - name: Backup NeoVim configuration
       ansible.builtin.shell:
         cmd: rsync --archive --delete ~/.config/nvim ../../config
+
+    - name: Backup Tmux configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete --exclude plugins ~/.config/tmux ../../config
