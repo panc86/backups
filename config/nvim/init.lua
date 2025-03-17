@@ -1,1 +1,2 @@
-require("lucot")
+require("default.config")
+require("default.lazy")
