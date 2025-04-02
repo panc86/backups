@@ -1,6 +1,7 @@
 -- Shorten function name
 local keymap = vim.keymap.set
 
+-- explorer
 keymap("n", "<leader>.", vim.cmd.Ex, { silent = true, noremap = true, desc = "back to project view" })
 
 -- move text
@@ -12,19 +13,19 @@ keymap("x", "<leader>p", [["_dP]], { desc = "Delete and paste (keep clipboard)" 
 keymap({ "n", "v" }, "<leader>y", [["+y]])
 keymap("n", "<leader>Y", [["+Y]])
 
--- Window navigation
-vim.keymap.set({ "n", "v", "i" }, "<C-h>", "<C-w>h", {
+-- window navigation
+keymap({ "n", "v", "i" }, "<C-h>", "<C-w>h", {
 	desc = "Navigate window left",
 })
-vim.keymap.set({ "n", "v", "i" }, "<C-j>", "<C-w>j", {
+keymap({ "n", "v", "i" }, "<C-j>", "<C-w>j", {
 	desc = "Navigate window down",
 })
-vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<C-w>k", {
+keymap({ "n", "v", "i" }, "<C-k>", "<C-w>k", {
 	desc = "Navigate window up",
 })
-vim.keymap.set({ "n", "v", "i" }, "<C-l>", "<C-w>l", {
+keymap({ "n", "v", "i" }, "<C-l>", "<C-w>l", {
 	desc = "Navigate window right",
 })
 
 -- save changes
-vim.keymap.set("n", "<leader>w", "<cmd>update!<cr>", { desc = "Save" })
+keymap("n", "<leader>w", "<cmd>update!<cr>", { desc = "Save" })
