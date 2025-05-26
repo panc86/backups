@@ -9,3 +9,10 @@
         dest: ~/.ssh/
         mode: 0600
         decrypt: true
+
+    - name: Restore decrypted SSH public key
+      ansible.builtin.copy:
+        src: ../../config/id_rsa.pub
+        dest: ~/.ssh/
+        mode: 0600
+        decrypt: true

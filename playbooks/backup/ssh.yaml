@@ -10,10 +10,17 @@
 
   vars:
     ssh_vault_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    ssh_vault_file_pub: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
 
   tasks:
     - name: Copy encrypted SSH private key {{ ssh_vault_file }}
       ansible.builtin.copy:
         content: "{{ lookup('ansible.builtin.file', ssh_vault_file) | ansible.builtin.vault(vault_secret) }}"
         dest: ../../config/id_rsa
+        decrypt: false
+
+    - name: Copy encrypted SSH public key {{ ssh_vault_file_pub }}
+      ansible.builtin.copy:
+        content: "{{ lookup('ansible.builtin.file', ssh_vault_file_pub) | ansible.builtin.vault(vault_secret) }}"
+        dest: ../../config/id_rsa.pub
         decrypt: false
