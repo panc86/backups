@@ -1,7 +1,6 @@
 ---
 - name: Restore configuration
   hosts: localhost
-  become: true
 
   tasks:
     - name: Restore decrypted SSH private key
