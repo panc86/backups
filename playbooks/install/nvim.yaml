@@ -2,6 +2,9 @@
 - name: Install NeoVim to current host
   hosts: localhost
   become: true
+  vars:
+    release: v0.11.4
+    checksum: sha256:79e7e160f9505819a5e12f3d9366be94213f5309fb912ef4ef3af52df3982977
 
   tasks:
     - name: Creates NeoVim directory
@@ -9,13 +12,14 @@
         path: /opt/nvim
         state: directory
 
-    - name: Install NeoVim v0.10.3 using AppImage and checksum
+    - name: "Install NeoVim {{ release }} AppImage"
       ansible.builtin.get_url:
-        url: "https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage"
+        url: "https://github.com/neovim/neovim/releases/download/{{ release }}/nvim-linux-x86_64.appimage"
         dest: /opt/nvim/nvim.appimage
-        mode: 0744
+        mode: 0755
+        # override the file if dest is not a directory
         force: true
-        checksum: sha256:ce5f6462d4fa7150cc90c593955f66f7707ab5edc1d18f87413ea482e096c24e
+        checksum: "{{ checksum }}"
 
     - name: Extract NeoVim Binary
       # If your system does not have FUSE you can extract the appimage
