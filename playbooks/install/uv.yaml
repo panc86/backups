@@ -1,0 +1,15 @@
+---
+- name: Install UV
+  hosts: localhost
+
+  tasks:
+    - name: Update apt cache and install wget
+      ansible.builtin.apt:
+        update_cache: yes
+        name: wget
+        install_recommends: no
+      become: true
+
+    - name: Install UV
+      ansible.builtin.shell:
+        cmd: wget -qO- https://astral.sh/uv/install.sh | sh
