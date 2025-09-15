@@ -3,13 +3,6 @@
   hosts: localhost
 
   tasks:
-    - name: Restore NeoVim configuration
-      ansible.builtin.copy:
-        src: ../../config/nvim
-        dest: ~/.config
-      tags:
-        - nvim
-
     - name: Restore Tmux configuration
       ansible.builtin.copy:
         src: ../../config/tmux
