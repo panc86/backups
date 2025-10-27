@@ -6,3 +6,6 @@
     - name: Backup Tmux configuration
       ansible.builtin.shell:
         cmd: rsync --archive --delete --exclude plugins ~/.config/tmux ../../config
+    - name: Backup VIm configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete ~/.vimrc ../../config

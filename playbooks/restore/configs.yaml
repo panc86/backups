@@ -16,3 +16,10 @@
         dest: ~/.config/tmux/plugins/tpm
       tags:
         - tmux
+
+    - name: Restore VIm configuration
+      ansible.builtin.copy:
+        src: ../../config/.vimrc
+        dest: ~/.config
+      tags:
+        - tmux
