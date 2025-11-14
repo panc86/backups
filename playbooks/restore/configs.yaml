@@ -20,6 +20,6 @@
     - name: Restore VIm configuration
       ansible.builtin.copy:
         src: ../../config/.vimrc
-        dest: ~/.config
+        dest: ~/.vimrc
       tags:
         - tmux
