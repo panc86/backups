@@ -30,7 +30,7 @@ set smarttab
 " history backup
 set noswapfile
 set nobackup
-set undofile
+set noundofile
 
 " fast updates
 set updatetime=50
