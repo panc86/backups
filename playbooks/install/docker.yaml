@@ -1,6 +1,10 @@
 ---
 - name: Install Docker Suite
   hosts: localhost
+  vars_prompt:
+  - name: ansible_become_password
+    prompt: "Enter sudo password"
+    private: yes
 
   vars:
     docker_compose_version: "5.1.1"
@@ -8,6 +12,7 @@
 
   tasks:
     - name: Uninstall Docker
+      become: true
       ansible.builtin.apt:
         name:
           - docker-ce
@@ -17,18 +22,19 @@
           - docker-compose-plugin
           - docker-ce-rootless-extras
         state: absent
-      become: true
 
     - name: Install Docker Engine via convenient script
+      become: true
       ansible.builtin.shell:
         cmd: curl -fsSL https://get.docker.com -o /tmp/get-docker.sh && sh /tmp/get-docker.sh
-      become: true
 
     - name: Creates Docker Plugin Directory
+      become: false
       ansible.builtin.shell:
         cmd: mkdir -p "{{ docker_config }}/cli-plugins"
 
     - name: Install Docker Compose v{{ docker_compose_version }}
+      become: false
       ansible.builtin.get_url:
         url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-linux-x86_64"
         dest: "{{ docker_config }}/cli-plugins/docker-compose"
