@@ -3,13 +3,13 @@
   hosts: localhost
 
   tasks:
-    - name: Update apt cache and install wget
+    - name: Update apt cache and ensure cURL in the system
       ansible.builtin.apt:
         update_cache: yes
-        name: wget
+        name: curl
         install_recommends: no
       become: true
 
     - name: Install UV
       ansible.builtin.shell:
-        cmd: wget -qO- https://astral.sh/uv/install.sh | sh
+        cmd: curl -LsSf https://astral.sh/uv/install.sh | sh
