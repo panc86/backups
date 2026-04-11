@@ -1,19 +1,31 @@
 ---
 - name: Download, build and install KeepassXC
-  hosts: localhost
   become: true
+  hosts: localhost
+  
+  vars_prompt:
+  - name: ansible_become_password
+    prompt: "Enter sudo password"
+    private: yes
+
+  vars:
+    release: "2.7.10"
 
   tasks:
+    - name: Remove previous KeepassXC installations into /opt/keepassxc
+      ansible.builtin.shell:
+        cmd: rm -r /opt/keepassxc-*
+
     - name: Download KeepassXC source code in /tmp
       ansible.builtin.get_url:
-        url: "https://github.com/keepassxreboot/keepassxc/releases/download/2.7.7/keepassxc-2.7.7-src.tar.xz"
-        dest: "/tmp/keepassxc-2.7.7-src.tar.xz"
+        url: "https://github.com/keepassxreboot/keepassxc/releases/download/{{ release }}/keepassxc-{{ release }}-src.tar.xz"
+        dest: "/tmp/keepassxc-{{ release }}-src.tar.xz"
         force: true
-        checksum: "sha256:https://github.com/keepassxreboot/keepassxc/releases/download/2.7.7/keepassxc-2.7.7-src.tar.xz.DIGEST"
+        checksum: "sha256:https://github.com/keepassxreboot/keepassxc/releases/download/{{ release }}/keepassxc-{{ release }}-src.tar.xz.DIGEST"
 
     - name: Unarchive KeepassXC source code into /opt/keepassxc
       ansible.builtin.shell:
-        cmd: tar -xf /tmp/keepassxc-2.7.7-src.tar.xz -C /opt
+        cmd: tar -xf /tmp/keepassxc-{{ release }}-src.tar.xz -C /opt
 
     - name: Update apt cache
       ansible.builtin.apt:
@@ -46,8 +58,8 @@
 
     - name: Build KeepassXC repo from source code
       ansible.builtin.shell:
-        cmd: cd /opt/keepassxc-2.7.7 && mkdir build && cd build && cmake -DWITH_XC_ALL=ON .. && make
+        cmd: cd /opt/keepassxc-{{ release }} && mkdir build && cd build && cmake -DWITH_XC_ALL=ON .. && make
 
     - name: Install KeepassXC repo from source code
       ansible.builtin.shell:
-        cmd: cd /opt/keepassxc-2.7.7/build && make install
+        cmd: cd /opt/keepassxc-{{ release }}/build && make install
