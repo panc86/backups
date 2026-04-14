@@ -11,6 +11,9 @@ set relativenumber
 " consisten cursor style N/I modes
 set guicursor=""
 
+" backspace on steroids
+set backspace=indent,eol,start
+
 " force splits below and right
 set splitbelow
 set splitright
