@@ -1,0 +1,92 @@
+---
+- name: Backup System Config
+  hosts: localhost
+
+  vars_prompt:
+    - name: vault_secret
+      prompt: Vault encryption password
+      confirm: true
+      private: true
+
+  vars:
+    debug: false
+    home_dir: "{{ lookup('env', 'HOME') }}"
+    keepass_file: "{{ home_dir }}/passdb.kdbx"
+
+  tasks:
+    - name: Ensure ./data/ssh/ directory exists
+      ansible.builtin.file:
+        path: ./data/ssh
+        state: directory
+
+    - name: Copy keepass database to ./data/
+      ansible.builtin.copy:
+        src: "{{ keepass_file }}"
+        dest: ./data/passdb.kdbx
+        mode: "0600"
+      no_log: "{{ not debug }}"
+
+    - name: Encrypt keepass database
+      ansible.builtin.shell:
+        cmd: ansible-vault encrypt --vault-password-file /dev/stdin ./data/passdb.kdbx
+        stdin: "{{ vault_secret }}"
+      no_log: "{{ not debug }}"
+
+    - name: Copy SSH keys to ./data/ssh/
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "./data/ssh/{{ item | basename }}"
+        mode: "0600"
+      loop: "{{ query('fileglob', home_dir + '/.ssh/id_*') }}"
+      no_log: "{{ not debug }}"
+
+    - name: Encrypt SSH keys
+      ansible.builtin.shell:
+        cmd: "ansible-vault encrypt --vault-password-file /dev/stdin ./data/ssh/{{ item | basename }}"
+        stdin: "{{ vault_secret }}"
+      loop: "{{ query('fileglob', home_dir + '/.ssh/id_*') }}"
+      no_log: "{{ not debug }}"
+
+    - name: Backup Tmux configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete --exclude plugins {{ home_dir }}/.config/tmux ./data
+
+    - name: Backup VIm configuration
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.vimrc ./data
+
+    - name: Verify keepass database is encrypted
+      ansible.builtin.shell:
+        cmd: "head -1 ./data/passdb.kdbx | grep -q '^\\$ANSIBLE_VAULT;'"
+
+    - name: Find all backed-up SSH key files
+      ansible.builtin.find:
+        paths: ./data/ssh/
+        patterns: "id_*"
+      register: backup_ssh_files
+
+    - name: Verify SSH keys are encrypted
+      ansible.builtin.shell:
+        cmd: "head -1 {{ item.path }} | grep -q '^\\$ANSIBLE_VAULT;'"
+      loop: "{{ backup_ssh_files.files }}"
+      loop_control:
+        label: "{{ item.path | basename }}"
+
+    - name: Stage backup data
+      ansible.builtin.command:
+        cmd: git add ./data/
+
+    - name: Check for staged changes
+      ansible.builtin.command:
+        cmd: git diff --cached --name-only
+      register: staged_changes
+      failed_when: staged_changes.stdout == ""
+
+    - name: Commit backup changes
+      ansible.builtin.command:
+        cmd: >-
+          git commit -m "Backup: {{ staged_changes.stdout_lines | map('regex_replace', '^data/', '') | join(', ') }}"
+
+    - name: Push to remote
+      ansible.builtin.command:
+        cmd: git push origin main

@@ -1,0 +1,50 @@
+---
+- name: Restore System Config
+  hosts: localhost
+
+  vars:
+    debug: false
+    home_dir: "{{ lookup('env', 'HOME') }}"
+
+  tasks:
+    - name: Pull latest backup from remote
+      ansible.builtin.command:
+        cmd: git pull
+
+    - name: Copy Tmux configuration to ~/.config
+      ansible.builtin.copy:
+        src: ./data/tmux
+        dest: "{{ home_dir }}/.config/"
+
+    - name: Ensure Tmux Plugin Manager is cloned
+      ansible.builtin.git:
+        repo: 'https://github.com/tmux-plugins/tpm.git'
+        dest: "{{ home_dir }}/.config/tmux/plugins/tpm"
+
+    - name: Copy .vimrc to home directory
+      ansible.builtin.copy:
+        src: ./data/.vimrc
+        dest: "{{ home_dir }}/.vimrc"
+
+    - name: Copy and decrypt keepass database to home directory
+      ansible.builtin.copy:
+        src: ./data/passdb.kdbx
+        dest: "{{ home_dir }}/passdb.kdbx"
+        mode: "0600"
+        decrypt: true
+      no_log: "{{ not debug }}"
+
+    - name: Find all backed-up SSH keys
+      ansible.builtin.find:
+        paths: ./data/ssh/
+        patterns: "id_*"
+      register: ssh_key_files
+
+    - name: Copy and decrypt SSH keys to ~/.ssh/
+      ansible.builtin.copy:
+        src: "{{ item.path }}"
+        dest: "{{ home_dir }}/.ssh/{{ item.path | basename }}"
+        mode: "0600"
+        decrypt: true
+      loop: "{{ ssh_key_files.files }}"
+      no_log: "{{ not debug }}"

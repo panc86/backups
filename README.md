@@ -8,23 +8,27 @@ Automate Linux machine set up using Ansible playbooks
 sudo apt install ansible-core
 ```
 
-## Backup
+## Backup System Configs
 
 ```shell
-ansible-playbook ./playbooks/backup/<component>.yaml
+ansible-playbook ./playbooks/backup.yaml
 ```
 
-> IMPORTANT
-> Commit and push changes to Github after each backup
-> to ensure they are available for other Linux machines
-
-## Restore
+## Restore System Configs
 
 ```shell
-ansible-playbook ./playbooks/restore/<component>.yaml
+ansible-playbook ./playbooks/restore.yaml --ask-vault-pass
 ```
 
-## Install
+## Debug Mode
+
+Append `-e debug=true` to show sensitive task output:
+
+```shell
+ansible-playbook ./playbooks/backup.yaml -e debug=true
+```
+
+## Install Components
 
 ```shell
 ansible-playbook ./playbooks/install/<component>.yaml
