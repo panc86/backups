@@ -9,7 +9,7 @@
     private: yes
 
   vars:
-    release: "2.7.10"
+    release: "2.7.12"
 
   tasks:
     - name: Remove previous KeepassXC installations into /opt/keepassxc
