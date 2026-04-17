@@ -30,7 +30,7 @@
       ansible.builtin.copy:
         src: ./data/passdb.kdbx
         dest: "{{ home_dir }}/passdb.kdbx"
-        mode: preserve
+        mode: "0600"
         decrypt: true
       no_log: "{{ not debug }}"
 
@@ -44,7 +44,33 @@
       ansible.builtin.copy:
         src: "{{ item.path }}"
         dest: "{{ home_dir }}/.ssh/{{ item.path | basename }}"
-        mode: preserve
+        mode: "{{ '0644' if item.path.endswith('.pub') else '0600' }}"
         decrypt: true
       loop: "{{ ssh_key_files.files }}"
       no_log: "{{ not debug }}"
+
+    - name: Find restored SSH keys
+      ansible.builtin.find:
+        paths: "{{ home_dir }}/.ssh/"
+        patterns: "id_*"
+      register: restored_ssh_files
+
+    - name: Verify private key permissions are 0600
+      ansible.builtin.assert:
+        that:
+          - item.mode == '0600'
+        fail_msg: "{{ item.path | basename }} has mode {{ item.mode }}, expected 0600"
+        success_msg: "{{ item.path | basename }} OK ({{ item.mode }})"
+      loop: "{{ restored_ssh_files.files | rejectattr('path', 'search', '\\.pub$') | list }}"
+      loop_control:
+        label: "{{ item.path | basename }}"
+
+    - name: Verify public key permissions are 0644
+      ansible.builtin.assert:
+        that:
+          - item.mode == '0644'
+        fail_msg: "{{ item.path | basename }} has mode {{ item.mode }}, expected 0644"
+        success_msg: "{{ item.path | basename }} OK ({{ item.mode }})"
+      loop: "{{ restored_ssh_files.files | selectattr('path', 'search', '\\.pub$') | list }}"
+      loop_control:
+        label: "{{ item.path | basename }}"

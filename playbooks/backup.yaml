@@ -10,6 +10,8 @@
 
   vars:
     debug: false
+    interactive: true
+    push: true
     home_dir: "{{ lookup('env', 'HOME') }}"
     keepass_file: "{{ home_dir }}/passdb.kdbx"
 
@@ -23,7 +25,7 @@
       ansible.builtin.copy:
         src: "{{ keepass_file }}"
         dest: ./data/passdb.kdbx
-        mode: preserve
+        mode: "0600"
       no_log: "{{ not debug }}"
 
     - name: Encrypt keepass database
@@ -36,7 +38,7 @@
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "./data/ssh/{{ item | basename }}"
-        mode: preserve
+        mode: "0600"
       loop: "{{ query('fileglob', home_dir + '/.ssh/id_*') }}"
       no_log: "{{ not debug }}"
 
@@ -82,11 +84,47 @@
       register: staged_changes
       failed_when: staged_changes.stdout == ""
 
+    - name: Categorize staged changes
+      ansible.builtin.set_fact:
+        ssh_changes: "{{ staged_changes.stdout_lines | select('search', '/ssh/') | list }}"
+        keepass_changes: "{{ staged_changes.stdout_lines | select('search', 'passdb') | list }}"
+        config_changes: "{{ staged_changes.stdout_lines | reject('search', '/ssh/') | reject('search', 'passdb') | list }}"
+
+    - name: Compose commit message
+      vars:
+        parts: >-
+          {{
+            ([(ssh_changes | length | string + ' SSH key file(s)')] if ssh_changes else [])
+            + (['KeePass database'] if keepass_changes else [])
+            + ([(config_changes | map('regex_replace', '^.*/', '') | join(', '))] if config_changes else [])
+          }}
+      ansible.builtin.set_fact:
+        commit_message: "Backup: {{ parts | join(', ') }}"
+
+    - name: Confirm or customize commit message
+      ansible.builtin.pause:
+        prompt: >-
+
+          Proposed commit message:
+            {{ commit_message }}
+
+          Press Enter to accept, type a custom message to override, or Ctrl+C -> A to abort
+      register: user_input
+      when: interactive | bool and push | bool
+
+    - name: Use custom message if provided
+      ansible.builtin.set_fact:
+        commit_message: "{{ user_input.user_input }}"
+      when:
+        - interactive | bool
+        - push | bool
+        - user_input.user_input | default('') | length > 0
+
     - name: Commit backup changes
       ansible.builtin.command:
-        cmd: >-
-          git commit -m "Backup: {{ staged_changes.stdout_lines | map('regex_replace', '^data/', '') | join(', ') }}"
+        cmd: "git commit -m '{{ commit_message }}'"
 
     - name: Push to remote
       ansible.builtin.command:
         cmd: git push origin main
+      when: push | bool
