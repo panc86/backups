@@ -10,6 +10,9 @@ sudo apt install ansible-core
 
 ## Backup System Configs
 
+> `-e debug=true`: show logs (debug mode)
+> `-e push=false`: do not push (dry run)
+
 ```shell
 ansible-playbook ./playbooks/backup.yaml
 ```
@@ -18,14 +21,6 @@ ansible-playbook ./playbooks/backup.yaml
 
 ```shell
 ansible-playbook ./playbooks/restore.yaml --ask-vault-pass
-```
-
-## Debug Mode
-
-Append `-e debug=true` to show sensitive task output:
-
-```shell
-ansible-playbook ./playbooks/backup.yaml -e debug=true
 ```
 
 ## Install Components
