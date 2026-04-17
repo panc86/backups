@@ -23,7 +23,7 @@
       ansible.builtin.copy:
         src: "{{ keepass_file }}"
         dest: ./data/passdb.kdbx
-        mode: "0600"
+        mode: preserve
       no_log: "{{ not debug }}"
 
     - name: Encrypt keepass database
@@ -36,7 +36,7 @@
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "./data/ssh/{{ item | basename }}"
-        mode: "0600"
+        mode: preserve
       loop: "{{ query('fileglob', home_dir + '/.ssh/id_*') }}"
       no_log: "{{ not debug }}"
 

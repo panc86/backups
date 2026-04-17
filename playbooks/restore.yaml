@@ -30,7 +30,7 @@
       ansible.builtin.copy:
         src: ./data/passdb.kdbx
         dest: "{{ home_dir }}/passdb.kdbx"
-        mode: "0600"
+        mode: preserve
         decrypt: true
       no_log: "{{ not debug }}"
 
@@ -44,7 +44,7 @@
       ansible.builtin.copy:
         src: "{{ item.path }}"
         dest: "{{ home_dir }}/.ssh/{{ item.path | basename }}"
-        mode: "0600"
+        mode: preserve
         decrypt: true
       loop: "{{ ssh_key_files.files }}"
       no_log: "{{ not debug }}"
