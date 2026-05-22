@@ -57,6 +57,30 @@
       ansible.builtin.shell:
         cmd: rsync --archive --delete {{ home_dir }}/.vimrc ./data
 
+    - name: Create .claude directory tree in ./data if it doesn't exist
+      ansible.builtin.shell:
+        cmd: mkdir -p ./data/.claude/{hooks,scripts,skills}
+
+    - name: Backup CLAUDE.md
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/CLAUDE.md ./data/.claude/CLAUDE.md
+
+    - name: Backup Claude settings
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/settings.json ./data/.claude/settings.json
+
+    - name: Backup Claude Hooks
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/hooks ./data/.claude
+
+    - name: Backup Claude Scripts
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/scripts ./data/.claude
+
+    - name: Backup Claude Skills
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/skills ./data/.claude
+
     - name: Verify keepass database is encrypted
       ansible.builtin.shell:
         cmd: "head -1 ./data/passdb.kdbx | grep -q '^\\$ANSIBLE_VAULT;'"
@@ -78,28 +102,9 @@
       ansible.builtin.command:
         cmd: git add ./data/
 
-    - name: Check for staged changes
-      ansible.builtin.command:
-        cmd: git diff --cached --name-only
-      register: staged_changes
-      failed_when: staged_changes.stdout == ""
-
-    - name: Categorize staged changes
-      ansible.builtin.set_fact:
-        ssh_changes: "{{ staged_changes.stdout_lines | select('search', '/ssh/') | list }}"
-        keepass_changes: "{{ staged_changes.stdout_lines | select('search', 'passdb') | list }}"
-        config_changes: "{{ staged_changes.stdout_lines | reject('search', '/ssh/') | reject('search', 'passdb') | list }}"
-
     - name: Compose commit message
-      vars:
-        parts: >-
-          {{
-            ([(ssh_changes | length | string + ' SSH key file(s)')] if ssh_changes else [])
-            + (['KeePass database'] if keepass_changes else [])
-            + ([(config_changes | map('regex_replace', '^.*/', '') | join(', '))] if config_changes else [])
-          }}
       ansible.builtin.set_fact:
-        commit_message: "Backup: {{ parts | join(', ') }}"
+        commit_message: "New backup"
 
     - name: Confirm or customize commit message
       ansible.builtin.pause:
