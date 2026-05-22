@@ -23,8 +23,8 @@ ansible-playbook ./playbooks/backup.yaml
 ansible-playbook ./playbooks/restore.yaml --ask-vault-pass
 ```
 
-## Install Components
+## Setup Development Environment
 
 ```shell
-ansible-playbook ./playbooks/install/<component>.yaml
+ansible-playbook ./playbooks/denv.yaml
 ```

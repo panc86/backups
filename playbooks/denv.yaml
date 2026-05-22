@@ -30,7 +30,7 @@
 
     - name: Install Claude
       ansible.builtin.shell:
-        cmd: curl -fsSL https://claude.ai/install.sh | sh
+        cmd: curl -fsSL https://claude.ai/install.sh | bash
 
     - name: Uninstall Docker
       become: true
