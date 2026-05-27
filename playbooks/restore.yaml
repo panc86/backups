@@ -26,17 +26,15 @@
         src: ./data/.vimrc
         dest: "{{ home_dir }}/.vimrc"
 
-    - name: Restore CLAUDE.md
+    - name: Restore Claude workspace
       ansible.builtin.shell:
-        cmd: rsync --archive --delete ./data/.claude/CLAUDE.md {{ home_dir }}/.claude/CLAUDE.md
-
-    - name: Restore Claude settings
-      ansible.builtin.shell:
-        cmd: rsync --archive --delete ./data/.claude/settings.json {{ home_dir }}/.claude/settings.json
-
-    - name: Restore Claude Hooks, Scripts and Skills
-      ansible.builtin.shell:
-        cmd: rsync --archive --delete ./data/.claude/{hooks,scripts,skills} {{ home_dir }}/.claude
+        cmd: rsync --archive --delete ./data/{{ item }} {{ home_dir }}/{{ item }}
+      loop:
+        - .claude/CLAUDE.md
+        - .claude/settings.json
+        - .claude/hooks
+        - .claude/scripts
+        - .claude/skills
 
     - name: Copy and decrypt keepass database to home directory
       ansible.builtin.copy:
