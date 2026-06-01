@@ -59,17 +59,31 @@
 
     - name: Create .claude directory tree in ./data if it doesn't exist
       ansible.builtin.shell:
-        cmd: mkdir -p ./data/.claude/{hooks,scripts,skills}
-
-    - name: Backup Claude workspace
-      ansible.builtin.shell:
-        cmd: rsync --archive --delete {{ home_dir }}/{{ item }} ./data/{{ item }}
+        cmd: mkdir -p ./data/.claude/{{ item }}
       loop:
-        - .claude/CLAUDE.md
-        - .claude/settings.json
-        - .claude/hooks
-        - .claude/scripts
-        - .claude/skills
+        - hooks
+        - scripts
+        - skills
+
+    - name: Backup Claude.md
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/CLAUDE.md ./data/.claude/CLAUDE.md
+
+    - name: Backup Claude settings.json
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/settings.json ./data/.claude/settings.json
+
+    - name: Backup Claude Hooks
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/hooks ./data/.claude/
+
+    - name: Backup Claude Scripts
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/scripts ./data/.claude/
+
+    - name: Backup Claude Skills
+      ansible.builtin.shell:
+        cmd: rsync --archive --delete {{ home_dir }}/.claude/skills ./data/.claude/
 
     - name: Verify keepass database is encrypted
       ansible.builtin.shell:

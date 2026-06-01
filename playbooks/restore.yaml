@@ -28,7 +28,7 @@
 
     - name: Restore Claude workspace
       ansible.builtin.shell:
-        cmd: rsync --archive --delete ./data/{{ item }} {{ home_dir }}/{{ item }}
+        cmd: rsync --archive --delete ./data/{{ item }} {{ home_dir }}/.claude/
       loop:
         - .claude/CLAUDE.md
         - .claude/settings.json
