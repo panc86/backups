@@ -7,16 +7,38 @@ description: Design new complex features. Invoke with /design-feature.
 
 # Context
 
-Read the project's domain glossary in `@docs/DOMAIN_JARGON.md` and the architecture's diagrams in `@docs/architecture/diagrams` first.
+Read these first:
+- Project domain glossary: `@docs/DOMAIN_JARGON.md`
+- Architecture diagrams: `@docs/architecture/diagrams`
+- Existing ADRs: `@docs/architecture/decisions/` — designs must not silently contradict settled decisions
+
+Use [LANGUAGE.md](../architecture-review/LANGUAGE.md) terms (module, interface, seam, depth, leverage, locality) in system design diagrams and component descriptions. Use `DOMAIN_JARGON.md` vocabulary for domain concepts.
+
 Then use the Agent tool with `subagent_type=Explore` to walk the codebase.
 
 # Scope
 
 Ask the user for a extensive description of the feature to design and start the /brainstorm.
 
+# Side effects during brainstorm
+
+- **New domain concept surfaces?** Add it to `DOMAIN_JARGON.md` — see [DOMAIN-JARGON-FORMAT.md](../architecture-review/DOMAIN-JARGON-FORMAT.md).
+- **Design decision hits the ADR threshold?** (hard to reverse, surprising without context, real trade-off) Offer to record it in `docs/architecture/decisions/` — see [ADR-FORMAT.md](../architecture-review/ADR-FORMAT.md).
+
 # Artifact
 
 `@docs/components/<feature_name>.md` in the project root.
+
+**Rules:**
+- Focus on *what* each component does, not *how* it is implemented.
+- Use Mermaid syntax to build the system design and flowchart diagrams.
+
+Mermaid Example:
+```
+graph TD
+  A[Component A] --> B[Component B]
+  B --> C[Component C]
+```
 
 ```markdown
 # Problem Statement
@@ -36,15 +58,4 @@ Ask the user for a extensive description of the feature to design and start the 
 
 # Out of Scope
 [Explicit list of what this effort does NOT cover]
-```
-
-**Rules:**
-- Use Mermaid syntax to build design diagrams and flowcharts.
-- Focus on *what* each component does, not *how* it is implemented.
-
-Mermaid Example:
-```
-graph TD
-  A[Component A] --> B[Component B]
-  B --> C[Component C]
 ```

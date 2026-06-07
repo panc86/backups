@@ -72,7 +72,7 @@ Side effects happen inline as decisions crystallize:
 
 ### 4. Write Implementation Brief
 
-After all chosen candidates are resolved, write an implementation brief to `docs/architecture/YYYYMMDD-review.md` (use the actual date). This document is the handoff to a fresh Claude session that will apply the changes.
+After all chosen candidates are resolved, write an implementation brief to `docs/architecture/reviews/YYYYMMDD-review.md` (use the actual date). This document is the handoff to a fresh Claude session that will apply the changes.
 
 The brief must be self-contained and include:
 
