@@ -12,7 +12,7 @@ Read these first:
 - Architecture diagrams: `@docs/architecture/diagrams`
 - Existing ADRs: `@docs/architecture/decisions/` — designs must not silently contradict settled decisions
 
-Use [LANGUAGE.md](../architecture-review/LANGUAGE.md) terms (module, interface, seam, depth, leverage, locality) in system design diagrams and component descriptions. Use `DOMAIN_JARGON.md` vocabulary for domain concepts.
+Use @~/.claude/skills/architecture-review/LANGUAGE.md terms (module, interface, seam, depth, leverage, locality) in system design diagrams and component descriptions. Use `DOMAIN_JARGON.md` vocabulary for domain concepts.
 
 Then use the Agent tool with `subagent_type=Explore` to walk the codebase.
 
@@ -22,8 +22,8 @@ Ask the user for a extensive description of the feature to design and start the 
 
 # Side effects during brainstorm
 
-- **New domain concept surfaces?** Add it to `DOMAIN_JARGON.md` — see [DOMAIN-JARGON-FORMAT.md](../architecture-review/DOMAIN-JARGON-FORMAT.md).
-- **Design decision hits the ADR threshold?** (hard to reverse, surprising without context, real trade-off) Offer to record it in `docs/architecture/decisions/` — see [ADR-FORMAT.md](../architecture-review/ADR-FORMAT.md).
+- **New domain concept surfaces?** Add it to `DOMAIN_JARGON.md` — see @~/.claude/skills/architecture-review/DOMAIN-JARGON-FORMAT.md.
+- **Design decision hits the ADR threshold?** (hard to reverse, surprising without context, real trade-off) Offer to record it in `docs/architecture/decisions/` — see @~/.claude/skills/architecture-review/ADR-FORMAT.md.
 
 # Artifact
 
