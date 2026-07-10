@@ -32,6 +32,8 @@ Ask the user for a extensive description of the feature to design and start the 
 **Rules:**
 - Focus on *what* each component does, not *how* it is implemented.
 - Use Mermaid syntax to build the system design and flowchart diagrams.
+- System  design diagram is required if the feature involves multiple components or services.
+- Sketch diagrams in a way that is understandable to non-technical stakeholders, while still being useful to engineers.
 
 Mermaid Example:
 ```
@@ -48,7 +50,7 @@ graph TD
 [What will be different — the solution boundary, not implementation details]
 
 # System Design Diagram
-[Sketch the major technology-agnostic system components and their relationships]
+[When required, sketch the major technology-agnostic system components and their relationships]
 
 # Flowchart Diagram
 [For each non-trivial component, sketch a flowchart of its internal logic or workflow]
