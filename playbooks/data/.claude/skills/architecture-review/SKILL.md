@@ -32,7 +32,7 @@ This skill is _informed_ by the project's domain model. The domain language give
 
 ### 1. Explore Code
 
-Read the project's domain glossary (`DOMAIN_JARGON.md`) and any ADRs in `docs/architecture/decisions/` first.
+Read the project's domain glossary (`DOMAIN_JARGON.md`) and any ADRs in `docs/architecture_reviews/` first.
 
 Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
 
@@ -55,7 +55,7 @@ Present a numbered list of deepening opportunities. For each candidate:
 
 **Use `DOMAIN_JARGON.md` vocabulary for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If `DOMAIN_JARGON.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 
-**ADR conflicts**: if a candidate contradicts an existing ADR in `docs/architecture/decisions/`, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
+**ADR conflicts**: if a candidate contradicts an existing ADR in `docs/architecture_reviews/`, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
 Do NOT propose interfaces yet. Ask the user: "Which of these would you like to explore?"
 
@@ -67,23 +67,9 @@ Side effects happen inline as decisions crystallize:
 
 - **Naming a deepened module after a concept not in `DOMAIN_JARGON.md`?** Add the term to `DOMAIN_JARGON.md` — see [DOMAIN-JARGON-FORMAT.md](DOMAIN-JARGON-FORMAT.md). Create the file lazily if it doesn't exist.
 - **Sharpening a fuzzy term during the conversation?** Update `DOMAIN_JARGON.md` right there.
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR in `docs/architecture/decisions/`, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. See [ADR-FORMAT.md](ADR-FORMAT.md).
+- **User rejects the candidate with a load-bearing reason?** Offer an ADR in `docs/architecture_reviews/`, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. See [ADR-FORMAT.md](ADR-FORMAT.md).
 - **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
 
 ### 4. Write Implementation Brief
 
-After all chosen candidates are resolved, write an implementation brief to `docs/architecture/reviews/YYYYMMDD-review.md` (use the actual date). This document is the handoff to a fresh Claude session that will apply the changes.
-
-The brief must be self-contained and include:
-
-- **Purpose and context** — project path, stack, domain docs to read first, candidates skipped and why
-- **Implementation order** — which candidates must be applied before others (dependency order)
-- **Per-candidate section** — for each resolved candidate:
-  - Exact method signatures with parameter names and types
-  - Full replacement code for new files
-  - Explicit list of methods/files to delete
-  - Schema or config changes with before/after where helpful
-- **Files changed summary** — a table of every file: Modify / Create / Delete / No change
-- **Verification checklist** — concrete observable behaviours to check after applying each candidate
-
-Do not summarise decisions at a high level — write code. The reader of this document is implementing, not deciding.
+When the candidates is resolved, write an implementation plan.

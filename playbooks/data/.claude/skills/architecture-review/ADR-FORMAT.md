@@ -1,8 +1,8 @@
 # ADR Format
 
-ADRs live in `docs/architecture/decisions/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADRs live in `docs/architecture_reviews/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
 
-Create the `docs/architecture/decisions/` directory lazily — only when the first ADR is needed.
+Create the `docs/architecture_reviews/` directory lazily — only when the first ADR is needed.
 
 ## Template
 
@@ -24,7 +24,7 @@ Only include these when they add genuine value. Most ADRs won't need them.
 
 ## Numbering
 
-Scan `docs/architecture/decisions/` for the highest existing number and increment by one.
+Scan `docs/architecture_reviews/` for the highest existing number and increment by one.
 
 ## When to offer an ADR
 
