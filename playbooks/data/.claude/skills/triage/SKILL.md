@@ -1,9 +1,7 @@
 ---
-name: triage-issue
-description: Triage a bug or issue in the codebase to find root cause.
-Create a TDD-based fix plan and write a report with your findings.
-Use when user reports a bug, mentions "triage", or wants to investigate and plan a fix for a problem.
-For new feature design, use /randd instead.
+name: triage
+description: Triage a bug or issue in the codebase to find root cause and write a report with your findings.
+disable-model-invocation: true
 ---
 
 Investigate a reported problem, find its root cause, create a TDD fix plan and a report.
@@ -42,21 +40,7 @@ Based on your investigation, determine:
 - What behaviors need to be verified via tests
 - Whether this is a regression, missing feature, or design flaw
 
-### 4. Design TDD fix plan
-
-Create a concrete, ordered list of RED-GREEN cycles. Each cycle is one vertical slice:
-
-- **RED**: Describe a specific test that captures the broken/missing behavior
-- **GREEN**: Describe the minimal code change to make that test pass
-
-Rules:
-- Tests verify behavior through public interfaces, not implementation details
-- One test at a time, vertical slices (NOT all tests first, then all code)
-- Each test should survive internal refactors
-- Include a final refactor step if needed
-- **Durability**: Only suggest fixes that would survive radical codebase changes. Describe behaviors and contracts, not internal structure. Tests assert on observable outcomes (API responses, UI state, user-visible effects), not internal state. A good suggestion reads like a spec; a bad one reads like a diff.
-
-### 5. Write a Report
+### 4. Write a Report
 
 Write a report with the template below. 
 
@@ -77,27 +61,6 @@ Describe what you found during investigation:
 - Any contributing factors
 
 Do NOT include specific file paths, line numbers, or implementation details that couple to current code layout. Describe modules, behaviors, and contracts instead. The issue should remain useful even after major refactors.
-
-## TDD Fix Plan
-
-A numbered list of RED-GREEN cycles:
-
-1. **RED**: Write a test that [describes expected behavior]
-   **GREEN**: [Minimal change to make it pass]
-
-2. **RED**: Write a test that [describes next behavior]
-   **GREEN**: [Minimal change to make it pass]
-
-...
-
-**REFACTOR**: [Any cleanup needed after all tests pass]
-
-## Acceptance Criteria
-
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] All new tests pass
-- [ ] Existing tests still pass
 
 </report-template>
 
