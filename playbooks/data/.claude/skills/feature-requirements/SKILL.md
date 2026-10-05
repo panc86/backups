@@ -28,7 +28,7 @@ Then, ask me for an extensive description of the new feature from which the prob
 - Requirements must be clear, complete, and testable.
 - If exploring the codebase can answer a question, do that instead of asking.
 - If a requirement is a solution in disguise, restate it as the need behind it.
-- If a new domain concept surfaces, add it to the `DOMAIN_JARGON.md` using the format specified in `~/.claude/skills/architecture-review/DOMAIN-JARGON-FORMAT.md`, and to the feature document.
+- If a new domain concept surfaces, add it to `docs/DOMAIN_JARGON.md` using the format specified in `~/.claude/skills/architecture-review/DOMAIN-JARGON-FORMAT.md`, and to the feature document.
 
 # Refinement
 Challenge the requirements one at a time to ensure they are necessary. The failure to avoid is designing a feature based on a requirement that should have been deleted.

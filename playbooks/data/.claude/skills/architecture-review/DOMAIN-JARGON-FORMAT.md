@@ -48,18 +48,18 @@ _Avoid_: Client, buyer, account
 
 ## Single vs multi-context repos
 
-**Single context (most repos):** One `DOMAIN_JARGON.md` at the repo root.
+**Single context (most repos):** One `docs/DOMAIN_JARGON.md`.
 
-**Multiple contexts:** A `DOMAIN-JARGON-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
+**Multiple contexts:** A `docs/DOMAIN-JARGON-MAP.md` lists the contexts, where they live, and how they relate to each other:
 
 ```md
 # Domain Jargon Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/DOMAIN_JARGON.md) — receives and tracks customer orders
-- [Billing](./src/billing/DOMAIN_JARGON.md) — generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/DOMAIN_JARGON.md) — manages warehouse picking and shipping
+- [Ordering](../src/ordering/DOMAIN_JARGON.md) — receives and tracks customer orders
+- [Billing](../src/billing/DOMAIN_JARGON.md) — generates invoices and processes payments
+- [Fulfillment](../src/fulfillment/DOMAIN_JARGON.md) — manages warehouse picking and shipping
 
 ## Relationships
 
@@ -70,8 +70,8 @@ _Avoid_: Client, buyer, account
 
 The skill infers which structure applies:
 
-- If `DOMAIN-JARGON-MAP.md` exists, read it to find contexts
-- If only a root `DOMAIN_JARGON.md` exists, single context
-- If neither exists, create a root `DOMAIN_JARGON.md` lazily when the first term is resolved
+- If `docs/DOMAIN-JARGON-MAP.md` exists, read it to find contexts
+- If only `docs/DOMAIN_JARGON.md` exists, single context
+- If neither exists, create `docs/DOMAIN_JARGON.md` lazily when the first term is resolved
 
 When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.

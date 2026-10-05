@@ -37,9 +37,14 @@
     }
   },
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "awaySummaryEnabled": false,
   "theme": "dark-ansi",
   "editorMode": "vim",
-  "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }

@@ -6,12 +6,15 @@ disable-model-invocation: true
 
 # Scope
 
-Read the at `docs/features/<feature-name>.md`: the one I give, or the one already in use in this conversation.
-Read it before acting. Otherwise, ask the user to run /feature-requirements, first.
+Read the `docs/features/<feature-name>.md` before acting, if I give you one.
+Otherwise, read the context in use in this conversation, or ask the user to run /feature-requirements.
 
 # Rules
 
-The following rules are now active for this session. They bias toward **caution over speed** — for trivial one-liners, use judgment.
+- Enforce these rules for this session.
+- Use **caution over speed**.
+- For trivial one-liners, use judgment. 
+- Use LF line endings.
 
 ## 1. Think Before Coding
 
@@ -80,3 +83,4 @@ Commit each logical change on its own, so every commit can be reviewed in isolat
 - Order commits so tests pass at each one. Repair a broken harness before the work that depends on it.
 - When several changes touch the same file, replay them as separate edits rather than staging part of a file.
 - Never stage a file the change did not require, and never stage untracked scratch files.
+- Do not add the ' Co-Authored-By: Claude ...' note.
