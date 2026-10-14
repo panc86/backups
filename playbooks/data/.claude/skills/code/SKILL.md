@@ -74,9 +74,9 @@ Strong success criteria let you iterate independently. Weak criteria ("make it w
 
 ## 5. GIT Commits
 
-Commit each logical change on its own, so every commit can be reviewed in isolation.
-
-- One commit per defect or feature. Never bundle unrelated work.
+Ask the user to commit the changes showing the commit message:
+- One commit per feature.
+- Do not bundle unrelated work.
 - Prefix commit messages with the branch name, if one exists. For example, if the branch is `fix-foo`, the commit message is `fix-foo: <message>`.
 - Stage by naming files: `git add <file> ...`. Never `git add .`, `-A`, or `-u`.
 - Subject line under 200 characters, saying what changed and why.

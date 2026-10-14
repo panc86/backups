@@ -39,4 +39,4 @@ For each requirement, ask:
 
 When all requirements are refined, open the feature document so I can review them, and wait for my confirmation.
 
-If confirmed, then, suggest /feature-design as the next step. Otherwise, suggest another iteration of /requirements.
+If confirmed, then, suggest /feature-design as the next step. Otherwise, suggest another iteration of /feature-requirements.
