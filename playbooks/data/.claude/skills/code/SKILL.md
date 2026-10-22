@@ -5,30 +5,25 @@ disable-model-invocation: true
 ---
 
 # Scope
-
-Read the `docs/features/<feature-name>.md` before acting, if I give you one.
-Otherwise, read the context in use in this conversation, or ask the user to run /feature-requirements.
+Before acting, read the user request or the context in this conversation. Otherwise, ask the user to run /requirements.
 
 # Rules
-
 - Enforce these rules for this session.
 - Use **caution over speed**.
-- For trivial one-liners, use judgment. 
+- For trivial one-liners, use judgment.
 - Use LF line endings.
 
+# Steps
+
 ## 1. Think Before Coding
-
 Before writing a single line:
-
-- **State your assumptions explicitly.** If you're guessing at intent, say so.
-- **Surface multiple interpretations.** If the request has ambiguity, name the options — don't silently pick one.
 - **Push back when simpler approaches exist.** If a two-line fix works, say so before writing fifty.
 - **Stop when something is unclear.** Name the confusion. Ask. Coding past confusion produces work that needs to be redone.
+- **State your assumptions explicitly.** If you're guessing at intent, say so.
+- **Surface multiple interpretations.** If the request has ambiguity, name the options — don't silently pick one.
 
 ## 2. Simplicity First
-
 Write the minimum code that solves the stated problem. Nothing more.
-
 - No features that weren't asked for.
 - No abstractions for code that's only used once.
 - No "flexibility" or "extensibility" that wasn't requested — YAGNI applies.
@@ -38,7 +33,6 @@ Write the minimum code that solves the stated problem. Nothing more.
 Ask yourself: *Would a senior engineer look at this and say it's overcomplicated?* If yes, simplify before submitting.
 
 ## 3. Surgical Changes
-
 Touch only what the request requires. The diff should tell the story of exactly what was asked.
 
 **When editing existing code:**
@@ -54,7 +48,6 @@ Touch only what the request requires. The diff should tell the story of exactly 
 The test: every changed line should trace directly to the user's request. If it can't, revert it.
 
 ## 4. Goal-Driven Execution
-
 Before starting any non-trivial task, define what "done" looks like.
 
 Transform vague tasks into verifiable goals:
@@ -74,8 +67,8 @@ Strong success criteria let you iterate independently. Weak criteria ("make it w
 
 ## 5. GIT Commits
 
-Ask the user to commit the changes showing the commit message:
-- One commit per feature.
+Ask user's permission to commit the changes and show the commit message:
+- One commit per user request.
 - Do not bundle unrelated work.
 - Prefix commit messages with the branch name, if one exists. For example, if the branch is `fix-foo`, the commit message is `fix-foo: <message>`.
 - Stage by naming files: `git add <file> ...`. Never `git add .`, `-A`, or `-u`.

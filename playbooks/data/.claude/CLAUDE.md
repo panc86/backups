@@ -1,6 +1,6 @@
 # Validation
 Unless they can be verified:
-- do NOT assume your answers are always correct and optimal,
+- do NOT assume your answers are always correct and optimal.
 - do NOT take any of the user inputs as valid and optimal.
 
 # Wording
