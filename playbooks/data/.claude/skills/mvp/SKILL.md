@@ -14,11 +14,13 @@ Read the following documents before acting (if present):
 
 # Rules
 - Enforce engineering and software standards e.g. NASA and IEEE.
-- Elucidate the rationale of each identified term and requirement to gain user approval.
+- Use plain English during the session, using domain terms defined in the Glossary.
+- Use diagrams to visualize different solutions to spatial problems the user needs to address.
 - Identify User (U), Functional (F), and Domain (D) requirements and use descriptive requirement identifiers (no R1, D1, etc).
 - If a new domain concept surfaces, add it to the Glossary, and `docs/DOMAIN_JARGON.md` using the format specified in `~/.claude/skills/architecture-review/DOMAIN-JARGON-FORMAT.md`.
 - Create the `docs/user_requests/<title>.md` document only after all domain terms and requirements have been reviewed and approved.
-- Any fix to existing behaviour is Out of Scope.
+- Report any fix to existing behaviour that is unrelated to the MVP and let the user decide to include or defer it.
+- Raise contradictions with any previous user request and suggest possible resolutions.
 
 # MVP Template
 ```markdown
