@@ -21,6 +21,7 @@ Read the following documents before acting (if present):
 - A design must not silently contradict settled decisions (ADR)s in `@docs/architecture_reviews/`, if they exist.
 - If a design decision hits the ADR threshold, i.e. hard to reverse, surprising without context, real trade-off, offer to record it in `docs/architecture_reviews/` using the format specified in `~/.claude/skills/architecture-review/ADR-FORMAT.md`.
 - If a new domain concept surfaces, add it to the Glossary, and `docs/DOMAIN_JARGON.md` using the format specified in `~/.claude/skills/architecture-review/DOMAIN-JARGON-FORMAT.md`.
+- Do not track changes to the glossary or the ADRs. Just change the documents. There is version control for that.
 - Report any fix to existing behaviour that is unrelated to the MVP and let the user decide to include or defer it.
 - Raise contradictions with any previous user request and suggest possible resolutions.
 
