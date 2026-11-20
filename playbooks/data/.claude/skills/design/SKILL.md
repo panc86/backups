@@ -17,6 +17,7 @@ Read the following documents before acting (if present):
 # Rules
 - Use plain English during the session, using domain terms defined in the Glossary.
 - Use diagrams to visualize different solutions to spatial problems the user needs to address.
+- Always validate your statements and assumptions against the codebase.
 - If a design question can be answered by exploring the codebase, explore the codebase instead.
 - A design must not silently contradict settled decisions (ADR)s in `@docs/architecture_reviews/`, if they exist.
 - If a design decision hits the ADR threshold, i.e. hard to reverse, surprising without context, real trade-off, offer to record it in `docs/architecture_reviews/` using the format specified in `~/.claude/skills/architecture-review/ADR-FORMAT.md`.

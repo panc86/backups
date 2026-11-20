@@ -21,6 +21,8 @@ Read the following documents before acting (if present):
 - Create the `docs/user_requests/<title>.md` document only after all domain terms and requirements have been reviewed and approved.
 - Report any fix to existing behaviour that is unrelated to the MVP and let the user decide to include or defer it.
 - Raise contradictions with any previous user request and suggest possible resolutions.
+- Always validate your statements and assumptions against the codebase.
+- If a mvp question can be answered by exploring the codebase, explore the codebase instead.
 
 # MVP Template
 ```markdown
